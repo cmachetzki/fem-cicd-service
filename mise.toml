@@ -1,0 +1,6 @@
+[tools]
+aws-cli = { version = "latest", symlink_bins = "true" }
+bun = "latest"
+fnox = "latest"
+node = "latest"
+pulumi = "latest"
