@@ -1,0 +1,7 @@
+default_provider = "bitwarden"
+
+[providers.bitwarden]
+type = "bitwarden"
+
+[secrets]
+"PULUMI_CONFIG_PASSPHRASE" = { provider = "bitwarden", value = "pulumi_local" }
