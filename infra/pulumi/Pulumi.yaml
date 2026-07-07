@@ -1,5 +1,5 @@
 name: fem-cicd-project
-description: A minimal AWS TypeScript Pulumi program
+description: A minimal GitHub TypeScript Pulumi program
 runtime:
   name: nodejs
   options:

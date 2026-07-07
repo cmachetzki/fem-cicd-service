@@ -2,5 +2,6 @@
 aws-cli = { version = "latest", symlink_bins = "true" }
 bun = "latest"
 fnox = "latest"
+github-cli = "latest"
 node = "latest"
 pulumi = "latest"

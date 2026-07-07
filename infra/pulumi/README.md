@@ -1,34 +1,23 @@
- # AWS TypeScript Pulumi Template
+  # GitHub TypeScript Pulumi Program
 
- A minimal Pulumi template for provisioning AWS infrastructure using TypeScript. This template creates an Amazon S3 bucket and exports its name.
+  A minimal Pulumi program for provisioning GitHub infrastructure using TypeScript. This program creates a public repository named `fem-cicd-service` and exports its name and URL.
 
  ## Prerequisites
 
  - Pulumi CLI (>= v3): https://www.pulumi.com/docs/get-started/install/
  - Node.js (>= 14): https://nodejs.org/
- - AWS credentials configured (e.g., via `aws configure` or environment variables)
+  - GitHub personal access token available as `GITHUB_TOKEN`
 
  ## Getting Started
 
- 1. Initialize a new Pulumi project:
+  1. Preview and deploy your infrastructure:
 
-    ```bash
-    pulumi new aws-typescript
-    ```
+     ```bash
+     pulumi preview
+     pulumi up
+     ```
 
-    Follow the prompts to set your:
-    - Project name
-    - Project description
-    - AWS region (defaults to `us-east-1`)
-
- 2. Preview and deploy your infrastructure:
-
-    ```bash
-    pulumi preview
-    pulumi up
-    ```
-
- 3. When you're finished, tear down your stack:
+  2. When you're finished, tear down your stack:
 
     ```bash
     pulumi destroy
@@ -37,24 +26,24 @@
 
  ## Project Layout
 
- - `Pulumi.yaml` — Pulumi project and template metadata
- - `index.ts` — Main Pulumi program (creates an S3 bucket)
- - `package.json` — Node.js dependencies
- - `tsconfig.json` — TypeScript compiler options
+  - `Pulumi.yaml` — Pulumi project and template metadata
+  - `index.ts` — Main Pulumi program (creates a GitHub repository)
+  - `package.json` — Node.js dependencies
+  - `tsconfig.json` — TypeScript compiler options
 
- ## Configuration
+  ## Configuration
 
- | Key           | Description                             | Default     |
- | ------------- | --------------------------------------- | ----------- |
- | `aws:region`  | The AWS region to deploy resources into | `us-east-1` |
+  | Key           | Description                             | Default     |
+  | ------------- | --------------------------------------- | ----------- |
+  | `GITHUB_TOKEN` | GitHub token used by the provider       | required    |
 
- Use `pulumi config set <key> <value>` to customize configuration.
+  The provider uses the account that owns `GITHUB_TOKEN` when no owner is set.
 
  ## Next Steps
 
- - Extend `index.ts` to provision additional resources (e.g., VPCs, Lambda functions, DynamoDB tables).
- - Explore [Pulumi AWSX](https://www.pulumi.com/docs/reference/pkg/awsx/) for higher-level AWS components.
- - Consult the [Pulumi documentation](https://www.pulumi.com/docs/) for more examples and best practices.
+  - Extend `index.ts` to provision repository settings, teams, or branch protection.
+  - Explore [Pulumi GitHub](https://www.pulumi.com/registry/packages/github/) for more GitHub resources.
+  - Consult the [Pulumi documentation](https://www.pulumi.com/docs/) for more examples and best practices.
 
  ## Getting Help
 

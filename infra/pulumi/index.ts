@@ -1,9 +1,9 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
+import * as github from "@pulumi/github";
 
-// Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket("my-bucket");
+const repository = new github.Repository("fem-cicd-service", {
+    name: "fem-cicd-service",
+    visibility: "public",
+});
 
-// Export the name of the bucket
-export const bucketName = bucket.id;
+export const repoName = repository.name;
+export const repoUrl = repository.htmlUrl;
