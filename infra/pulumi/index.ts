@@ -1,3 +1,4 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as github from "@pulumi/github";
 import * as aws from "@pulumi/aws";
 
@@ -47,9 +48,41 @@ new aws.s3.BucketPolicy("fem-cicd-service-policy", {
     ),
 });
 
+const uploader = new aws.iam.User("fem-cicd-service-uploader", {
+    name: "fem-cicd-service-uploader",
+});
+
+new aws.iam.UserPolicy("fem-cicd-service-uploader-policy", {
+    user: uploader.name,
+    policy: bucket.arn.apply((arn) =>
+        JSON.stringify({
+            Version: "2012-10-17",
+            Statement: [
+                {
+                    Effect: "Allow",
+                    Action: ["s3:ListBucket", "s3:GetBucketLocation"],
+                    Resource: [arn],
+                },
+                {
+                    Effect: "Allow",
+                    Action: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+                    Resource: [`${arn}/*`],
+                },
+            ],
+        }),
+    ),
+});
+
+const uploaderAccessKey = new aws.iam.AccessKey("fem-cicd-service-uploader-access-key", {
+    user: uploader.name,
+});
+
 export const repoName = repository.name;
 export const repoUrl = repository.htmlUrl;
 export const bucketName = bucket.id;
 export const bucketArn = bucket.arn;
 export const websiteEndpoint = website.websiteEndpoint;
 export const websiteDomain = website.websiteDomain;
+export const uploaderUserName = uploader.name;
+export const uploaderAccessKeyId = uploaderAccessKey.id;
+export const uploaderSecretAccessKey = pulumi.secret(uploaderAccessKey.secret);
