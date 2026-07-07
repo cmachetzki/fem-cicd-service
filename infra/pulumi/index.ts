@@ -5,6 +5,8 @@ import * as aws from "@pulumi/aws";
 const repository = new github.Repository("fem-cicd-service", {
     name: "fem-cicd-service",
     visibility: "public",
+}, {
+    retainOnDelete: true,
 });
 
 const bucket = new aws.s3.Bucket("fem-cicd-service", {
@@ -12,7 +14,7 @@ const bucket = new aws.s3.Bucket("fem-cicd-service", {
     forceDestroy: true,
 });
 
-new aws.s3.BucketPublicAccessBlock("fem-cicd-service-public-access-block", {
+const publicAccessBlock = new aws.s3.BucketPublicAccessBlock("fem-cicd-service-public-access-block", {
     bucket: bucket.id,
     blockPublicAcls: false,
     blockPublicPolicy: false,
@@ -46,6 +48,8 @@ new aws.s3.BucketPolicy("fem-cicd-service-policy", {
             ],
         }),
     ),
+}, {
+    dependsOn: [publicAccessBlock],
 });
 
 const uploader = new aws.iam.User("fem-cicd-service-uploader", {
