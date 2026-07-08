@@ -1,0 +1,38 @@
+# .github/actions/build-astro/action.yml — Stable stage, segment 9
+# Composite action: setup Node, install with cache, build Astro, upload dist/.
+# Consumed by deploy.yml in segment 9 and by ci.yml + _build.yml in segment 10.
+
+name: Build Astro
+description: Install dependencies with npm cache, build the Astro static site, and upload the dist artifact.
+
+inputs:
+  bun-version:
+    description: Bun version (e.g. `22.22`) to use for the build.
+    required: false
+    default: '1.3.4'
+  artifact-name:
+    description: Name to give the uploaded build artifact.
+    required: false
+    default: dist
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: ${{ inputs.bun-version }}
+
+    - name: Install
+      run: bun install --frozen-lockfile
+      shell: bash
+
+    - name: Build
+      run: bun run build
+      shell: bash
+
+    - name: Upload dist
+      uses: actions/upload-artifact@v7
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: dist/
