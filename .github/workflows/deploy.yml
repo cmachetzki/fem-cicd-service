@@ -11,14 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
-      - run: bun run build
-      - uses: actions/upload-artifact@v7
-        with:
-          name: dist
-          path: dist/
-
+      - name: Build Astro
+        uses: ./.github/actions/build-astro
+      
   deploy:
     runs-on: ubuntu-latest
     needs: build
