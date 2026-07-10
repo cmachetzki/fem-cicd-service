@@ -1,6 +1,6 @@
   # GitHub TypeScript Pulumi Program
 
-  A minimal Pulumi program for provisioning GitHub infrastructure and an S3 bucket using TypeScript. This program creates a public repository named `fem-cicd-service` and a public S3 bucket configured for static website hosting.
+  A Pulumi program split into separate GitHub and AWS stacks.
 
  ## Prerequisites
 
@@ -24,10 +24,20 @@
     pulumi stack rm
     ```
 
- ## Project Layout
+  ## Stacks
+
+  - `github` creates the repository, branch protection, environment, and Actions variable.
+  - `aws` creates the S3 website, IAM OIDC provider, upload role, and uploader user.
+  - `dev` keeps the legacy combined behavior.
+
+  The `aws` stack requires `githubRepoFullName` config, for example `cmachetzki/fem-cicd-service`.
+
+  ## Project Layout
 
   - `Pulumi.yaml` — Pulumi project and template metadata
-  - `index.ts` — Main Pulumi program (creates a GitHub repository and S3 bucket)
+  - `index.ts` — Stack router
+  - `aws.ts` — AWS resources
+  - `github.ts` — GitHub resources
   - `package.json` — Node.js dependencies
   - `tsconfig.json` — TypeScript compiler options
 

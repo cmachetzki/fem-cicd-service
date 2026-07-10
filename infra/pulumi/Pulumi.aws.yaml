@@ -1,0 +1,4 @@
+encryptionsalt: v1:lLf90QwFmIM=:v1:KoR484mgYq/2M8og:JeBTf/I7+Ud7t3UKwAP0dsNUN1paYQ==
+config:
+  fem-cicd-project:githubRepoFullName: cmachetzki/fem-cicd-service
+  aws:region: us-east-1
